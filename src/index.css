@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   CEO'S OFFICE — EXECUTIVE DESIGN SYSTEM
+   A warm, premium dark palette with gold accents.
+   Designed to feel like a Bloomberg Terminal meets
+   a luxury automotive dashboard.
+   ═══════════════════════════════════════════════════ */
+
+@theme {
+  /* Sleek, sophisticated dark base (less harsh) */
+  --color-surface-900: #09090b;
+  --color-surface-800: #111114;
+  --color-surface-700: #18181c;
+  --color-surface-600: #222228;
+  --color-surface-500: #2a2a32;
+  --color-surface-400: #3f3f4a;
+  --color-surface-300: #52526a;
+  --color-surface-200: #7a7a96;
+  --color-surface-100: #a5a5be;
+
+  /* Accent: warm gold/amber (unique, NOT typical blue) */
+  --color-accent-400: #f5c842;
+  --color-accent-500: #e5b631;
+  --color-accent-600: #c99b1d;
+
+  /* Semantic KPI colors */
+  --color-positive: #34d399;
+  --color-danger: #f87171;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
+
+  /* Card glass surface */
+  --color-card: #1a1a22;
+  --color-card-hover: #22222d;
+  --color-border: #27273380;
+
+  /* Text hierarchy */
+  --color-text-primary: #eeeef2;
+  --color-text-secondary: #9d9db8;
+  --color-text-tertiary: #64648a;
+
+  /* Fonts */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Radius */
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+}
+
+/* Base resets */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-surface-900);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+/* Subtle dot-grid background texture (not plain flat color) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-surface-500); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-surface-400); }
+
+/* Premium card surface */
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  background: var(--color-card-hover);
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* Bento-grid system */
+.bento-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(12, 1fr);
+}
+.bento-grid > .span-3 { grid-column: span 3; }
+.bento-grid > .span-4 { grid-column: span 4; }
+.bento-grid > .span-5 { grid-column: span 5; }
+.bento-grid > .span-6 { grid-column: span 6; }
+.bento-grid > .span-7 { grid-column: span 7; }
+.bento-grid > .span-8 { grid-column: span 8; }
+.bento-grid > .span-12 { grid-column: span 12; }
+.bento-grid > .row-2 { grid-row: span 2; }
+
+@media (max-width: 1024px) {
+  .bento-grid > [class*="span-"] { grid-column: span 12; }
+}
+
+/* Gradient glow ring for important elements */
+.glow-ring {
+  position: relative;
+}
+.glow-ring::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.3), rgba(96,165,250,0.15), rgba(52,211,153,0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.glow-ring:hover::after { opacity: 1; }
+
+/* Pill badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Status variants */
+.pill-positive { background: rgba(52,211,153,0.12); color: var(--color-positive); }
+.pill-danger { background: rgba(248,113,113,0.12); color: var(--color-danger); }
+.pill-warning { background: rgba(251,191,36,0.12); color: var(--color-warning); }
+.pill-info { background: rgba(96,165,250,0.12); color: var(--color-info); }
+.pill-neutral { background: rgba(255,255,255,0.06); color: var(--color-text-secondary); }
+
+/* Shimmer loader */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface-700) 25%, var(--color-surface-600) 50%, var(--color-surface-700) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Micro-interactions */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Stagger children */
+.stagger > :nth-child(1) { animation-delay: 0.04s; }
+.stagger > :nth-child(2) { animation-delay: 0.08s; }
+.stagger > :nth-child(3) { animation-delay: 0.12s; }
+.stagger > :nth-child(4) { animation-delay: 0.16s; }
+.stagger > :nth-child(5) { animation-delay: 0.2s; }
+.stagger > :nth-child(6) { animation-delay: 0.24s; }
+.stagger > :nth-child(7) { animation-delay: 0.28s; }
+.stagger > :nth-child(8) { animation-delay: 0.32s; }
+
+/* Table styling */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.data-table thead th {
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  white-space: nowrap;
+}
+.data-table tbody td {
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+.data-table tbody tr {
+  transition: background 0.15s ease;
+}
+.data-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Progress ring (for circular progress) */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Custom focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
